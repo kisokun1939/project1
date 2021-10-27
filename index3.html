@@ -23,7 +23,7 @@
 
         // カメラを作成
         const camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
-        camera.position.set(0, 0, +1300);
+        camera.position.set(0, 0, +300);
         camera.lookAt(new THREE.Vector3(0, 0, 0));
 
         // コンテナーを作成
@@ -31,8 +31,12 @@
         scene.add(container);
 
         // マテリアルを作成
-        const material = new THREE.MeshStandardMaterial({
-          color: 0x0000ff,
+        const material1 = new THREE.MeshStandardMaterial({
+          color: 0xFFD400,
+          side: THREE.DoubleSide,
+        });
+        const material2 = new THREE.MeshStandardMaterial({
+          color: 0xED1A3D,
           side: THREE.DoubleSide,
         });
 
@@ -47,31 +51,57 @@
         directionalLight.position.set(1, 1, 1);
         scene.add(directionalLight);
 
-        // 球体を作成
-        const geometry1 = new THREE.SphereGeometry(150, 30, 30);
-        // マテリアルを作成
-        const material1 = new THREE.MeshStandardMaterial({ color: 0xED1A3D });
-        // メッシュを作成
-        const mesh1 = new THREE.Mesh(geometry1, material1);
-        // 3D空間にメッシュを追加
-        scene.add(mesh1);
+        // // 球体を作成
+        // const geometry1 = new THREE.SphereGeometry(150, 30, 30);
+        // // マテリアルを作成
+        // const material1 = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+        // // メッシュを作成
+        // const mesh1 = new THREE.Mesh(geometry1, material1);
+        // // 3D空間にメッシュを追加
+        // scene.add(mesh1);
 
         // ジオメトリを作成
         const geometryList = [
           new THREE.SphereGeometry(30), // 球体
           new THREE.SphereGeometry(30), // 球体
+          // new THREE.SphereGeometry(30), // 球体
+          // new THREE.SphereGeometry(30), // 球体
         ];
 
         geometryList.map((geometry, index) => {
           // 形状とマテリアルからメッシュを作成します
-          const mesh = new THREE.Mesh(geometry, material);
+          const mesh = new THREE.Mesh(geometry, material1);
 
           // 3D表示インスタンスのsceneプロパティーが3D表示空間となります
           container.add(mesh);
 
           // 円周上に配置
-          mesh.position.x = 400 * Math.sin((index / geometryList.length) * Math.PI * 2);
-          mesh.position.z = 400 * Math.cos((index / geometryList.length) * Math.PI * 2);
+          mesh.position.x = 40 * Math.sin((index / geometryList.length) * Math.PI * 2);
+          mesh.position.z = 40 * Math.cos((index / geometryList.length) * Math.PI * 2);
+        });
+        const geometryList2 = [
+          new THREE.SphereGeometry(30), // 球体
+          new THREE.SphereGeometry(30), // 球体
+          // new THREE.SphereGeometry(30), // 球体
+          // new THREE.SphereGeometry(30), // 球体
+        ];
+
+        geometryList2.map((geometry, index) => {
+          // 形状とマテリアルからメッシュを作成します
+          const mesh = new THREE.Mesh(geometry, material2);
+
+          // 3D表示インスタンスのsceneプロパティーが3D表示空間となります
+          container.add(mesh);
+
+          // 円周上に配置
+          mesh.position.z = 40 * Math.sin((index / geometryList.length) * Math.PI * 2);
+          mesh.position.x = 40 * Math.cos((index / geometryList.length) * Math.PI * 2);
+          // if (index==0){
+          //   mesh.position.y = 40
+          // } else {
+          //   mesh.position.y = -40
+
+          // }
         });
 
         tick();
@@ -79,7 +109,7 @@
         // 毎フレーム時に実行されるループイベントです
         function tick() {
           // メッシュを回転させる
-          container.rotation.y += 0.1;
+          container.rotation.y += 0.01;
           container.rotation.x += 0.05;
           // レンダリング
           renderer.render(scene, camera);
